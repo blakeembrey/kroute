@@ -1,0 +1,42 @@
+{
+  "name": "kroute",
+  "version": "0.0.0",
+  "description": "Modular Koa router middleware with Express-style routes and middleware mounting",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "node --harmony-generators node_modules/.bin/istanbul cover _mocha -- -R spec --require co-mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/blakeembrey/kroute.git"
+  },
+  "keywords": [
+    "koa",
+    "router",
+    "generators",
+    "route",
+    "resource",
+    "mount",
+    "application"
+  ],
+  "author": "Blake Embrey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/blakeembrey/kroute/issues"
+  },
+  "homepage": "https://github.com/blakeembrey/kroute",
+  "devDependencies": {
+    "mocha": "^1.18.0",
+    "istanbul": "git://github.com/gotwarlost/istanbul#harmony",
+    "co-mocha": "0.0.2",
+    "koa": "^0.5.1",
+    "co-retest": "0.0.4"
+  },
+  "dependencies": {
+    "methods": "^0.1.0",
+    "path-to-regexp": "^0.1.2",
+    "koa-compose": "^2.2.0",
+    "variadic": "0.0.2",
+    "array-flatten": "0.0.2"
+  }
+}
