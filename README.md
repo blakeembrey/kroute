@@ -5,12 +5,12 @@ Modular Koa router middleware with Express-style routes and middleware mounting.
 ## Install
 
 ```
-npm install kroute
+npm install kroute --save
 ```
 
 ## Usage
 
-Kroute exports a function which can be used to create a router instance that works with Koa.
+Kroute exports a function which can be used to create router instances that work with Koa middleware.
 
 ```js
 var koa    = require('koa');
@@ -28,7 +28,7 @@ A router can be initialized with default handlers based on a resourceful routing
 
 ```js
 router({
-  load: authorizeUser(),
+  use: authorizeUser(),
   index: function* () {},
   create: [function* () {}, function* () {}]
 });
@@ -46,7 +46,7 @@ PUT     /:id              ->  update
 DELETE  /:id              ->  destroy
 ```
 
-The object can also contain a `load` property which is mounted before the routes.
+The object can also contain a `use` property which is mounted before any routes.
 
 ### Routes
 
@@ -96,13 +96,13 @@ As long as the middleware follows the Koa generator pattern, it can be mounted.
 
 ```js
 router.use('/users', function* (next) {
-  console.log(this.url); //=> "/123" -> Strips route prefix.
+  console.log(this.url); //=> "/123" -> Stripped the route prefix.
 
   yield next;
 });
 ```
 
-Like every other method, `.use` also accepts multiple request handlers and an optional path.
+Like other methods, `.use` also accepts multiple request handlers and an optional path.
 
 ```js
 router.use(authorizeUser(), function* () {});
@@ -118,13 +118,11 @@ router.get('/:user', function* () {
 });
 ```
 
-Every match is stored in the params as an array and named params as properties of the array.
+Every match is stored in the params as an object.
 
 ```js
 router.get('/:foo/:bar', function* () {
-  console.log(this.params); //=> ["123", "456"]
-  console.log(this.params.foo); //=> "123"
-  console.log(this.params.bar); //=> "456"
+  console.log(this.params); //=> { foo: "123", bar: "456" }
 });
 ```
 
@@ -132,13 +130,13 @@ The route can also be a regular expression.
 
 ```js
 router.get(/^\/blog\/(\d{4})-(\d{2})-(\d{2})\/?$/i, function* (next) {
-  console.log(this.params); // => ['2014', '03', '17']
+  console.log(this.params); // => { 0: '2014', 1: '03', 2: '17' }
 });
 ```
 
 ### Chaining
 
-Every method returns it's own instance, so routes can be chained as your used to with Express.
+Every method returns it's own instance, so routes can be chained together like Express.
 
 ```js
 router

@@ -27,7 +27,7 @@ describe('kroute', function () {
       };
 
       app.use(kroute({
-        load: function* (next) {
+        use: function* (next) {
           this.user = { name: 'Blake' };
           yield next;
         },
@@ -110,7 +110,6 @@ describe('kroute', function () {
         describe('params', function () {
           it('should provide access to path params', function* () {
             router[method]('/:user', function* () {
-              assert.equal(this.params[0],   '123');
               assert.equal(this.params.user, '123');
 
               this.body = 'success';
@@ -126,12 +125,10 @@ describe('kroute', function () {
           });
 
           it('should provide every param in an array', function* () {
-            router[method]('/:foo/:bar', function* () {
+            router[method]('/:foo/([^/]+?)', function* () {
               assert.ok(Array.isArray(this.params));
-              assert.equal(this.params[0], '123');
-              assert.equal(this.params[1], '456');
+              assert.equal(this.params[0], '456');
               assert.equal(this.params.foo, '123');
-              assert.equal(this.params.bar, '456');
 
               this.body = 'success';
             });
@@ -289,7 +286,7 @@ describe('kroute', function () {
 
       it('should support nested routers', function* () {
         var mounted = kroute({
-          load: function* (next) {
+          use: function* (next) {
             this.user = { name: 'Blake' };
 
             yield next;
