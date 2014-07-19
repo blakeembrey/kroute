@@ -126,7 +126,6 @@ describe('kroute', function () {
 
           it('should provide every param in an array', function* () {
             router[method]('/:foo/([^/]+?)', function* () {
-              assert.ok(Array.isArray(this.params));
               assert.equal(this.params[0], '456');
               assert.equal(this.params.foo, '123');
 
