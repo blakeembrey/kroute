@@ -1,5 +1,10 @@
 # Kroute
 
+[![NPM version][npm-image]][npm-url]
+[![Build status][travis-image]][travis-url]
+[![Test coverage][coveralls-image]][coveralls-url]
+[![Gittip][gittip-image]][gittip-url]
+
 Modular Koa router middleware with Express-style routes and middleware mounting.
 
 ## Install
@@ -155,3 +160,12 @@ router.get('/foo', function* () {}, { strict: true, sensitive: true });
 ## License
 
 MIT
+
+[npm-image]: https://img.shields.io/npm/v/kroute.svg?style=flat
+[npm-url]: https://npmjs.org/package/kroute
+[travis-image]: https://img.shields.io/travis/blakeembrey/kroute.svg?style=flat
+[travis-url]: https://travis-ci.org/blakeembrey/kroute
+[coveralls-image]: https://img.shields.io/coveralls/blakeembrey/kroute.svg?style=flat
+[coveralls-url]: https://coveralls.io/r/blakeembrey/kroute?branch=master
+[gittip-image]: https://img.shields.io/gittip/blakeembrey.svg?style=flat
+[gittip-url]: https://www.gittip.com/blakeembrey
