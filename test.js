@@ -377,5 +377,19 @@ describe('kroute', function () {
         assert.equal(res[2].statusCode, 200);
       });
     });
+
+    describe('optional parameters', function () {
+      it('should not decode null values', function* () {
+        router.get('/:id?', function* () {
+          assert.equal(this.params.id, undefined);
+
+          this.body = 'success';
+        });
+
+        var res = yield request.get('/');
+
+        assert.equal(res.body, 'success');
+      });
+    });
   });
 });
