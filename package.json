@@ -30,16 +30,16 @@
   },
   "homepage": "https://github.com/blakeembrey/kroute",
   "devDependencies": {
-    "co-mocha": "0.0.4",
-    "co-retest": "0.0.4",
+    "co-mocha": "^1.0.0",
+    "co-retest": "^1.0.0",
     "istanbul": "git://github.com/gotwarlost/istanbul#harmony",
-    "koa": "^0.8.1",
+    "koa": "^0.10.0",
     "mocha": "^1.18.0"
   },
   "dependencies": {
-    "array-flatten": "0.0.2",
+    "array-flatten": "^1.0.0",
     "koa-compose": "^2.2.0",
     "methods": "^1.1.0",
-    "path-to-regexp": "^0.2.3"
+    "path-to-regexp": "^1.0.0"
   }
 }
