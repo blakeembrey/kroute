@@ -20,7 +20,8 @@ describe('kroute', function () {
 
       function create (body) {
         return function * () {
-          assert.equal(this.user.name, 'Blake')
+          assert.equal(this.user.name, 'blakeembrey')
+
           this.body = body
         }
       }
@@ -28,7 +29,7 @@ describe('kroute', function () {
       app.use(kroute({
         use: function * (next) {
           this.user = {
-            name: 'Blake'
+            name: 'blakeembrey'
           }
 
           yield next
@@ -258,6 +259,9 @@ describe('kroute', function () {
     describe('#use()', function () {
       it('should mount any middleware', function * () {
         var mount = function * () {
+          assert.equal(this.url, '/')
+          assert.equal(this.path, '/')
+
           this.body = 'success'
         }
 
@@ -288,18 +292,21 @@ describe('kroute', function () {
       it('should support nested routers', function * () {
         var mounted = kroute({
           use: function * (next) {
-            this.user = { name: 'Blake' }
+            this.user = { name: 'blakeembrey' }
 
             yield next
           },
           index: function * () {
-            this.body = 'mounted'
+            this.body = this.params.user
           }
         })
 
         var nested = kroute({
           index: function * () {
-            this.body = 'nested'
+            assert.equal(this.url, '/')
+            assert.equal(this.path, '/')
+
+            this.body = this.params.user + ' ' + this.params.id
           }
         })
 
@@ -307,7 +314,9 @@ describe('kroute', function () {
         mounted.use('/:id', nested)
 
         router.post('/123', function * (next) {
-          assert.equal(this.user.name, 'Blake')
+          assert.equal(this.url, '/123')
+          assert.equal(this.path, '/123')
+          assert.equal(this.user.name, 'blakeembrey')
 
           yield next
         }, function * () {
@@ -316,12 +325,12 @@ describe('kroute', function () {
 
         var mountedResponse = yield request('/abc')
 
-        assert.equal(mountedResponse.body, 'mounted')
+        assert.equal(mountedResponse.body, 'abc')
         assert.equal(mountedResponse.status, 200)
 
         var nestedResponse = yield request('/abc/123')
 
-        assert.equal(nestedResponse.body, 'nested')
+        assert.equal(nestedResponse.body, 'abc 123')
         assert.equal(nestedResponse.status, 200)
 
         var failoverResponse = yield request({ url: '/123', method: 'post' })
@@ -345,6 +354,33 @@ describe('kroute', function () {
         router.use('/mount', mount)
 
         var res = yield request('/mount?query=true')
+
+        assert.equal(res.body, 'success')
+        assert.equal(res.status, 200)
+      })
+
+      it('should reset the params after each request', function * () {
+        router.use('/:param', function * (next) {
+          assert.deepEqual(this.url, '/')
+          assert.deepEqual(this.path, '/')
+          assert.deepEqual(this.params, { param: '123' })
+
+          yield next
+
+          assert.deepEqual(this.url, '/')
+          assert.deepEqual(this.path, '/')
+          assert.deepEqual(this.params, { param: '123' })
+        })
+
+        router.get('/:anotherParam', function * () {
+          assert.deepEqual(this.url, '/123')
+          assert.deepEqual(this.path, '/123')
+          assert.deepEqual(this.params, { anotherParam: '123' })
+
+          this.body = 'success'
+        })
+
+        var res = yield request('/123')
 
         assert.equal(res.body, 'success')
         assert.equal(res.status, 200)

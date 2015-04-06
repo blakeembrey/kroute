@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "standard",
-    "test-spec": "mocha -R spec --bail",
+    "test-spec": "mocha --harmony-generators -R spec --bail --require co-mocha",
     "test-cov": "node --harmony-generators node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- -R spec --bail --require co-mocha",
     "test": "npm run lint && npm run test-cov"
   },
