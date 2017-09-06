@@ -1,12 +1,15 @@
 {
   "name": "kroute",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Modular Koa router middleware with Express-style routes and middleware mounting",
   "main": "lib/index.js",
+  "engines": {
+    "node": ">=7.6.0"
+  },
   "scripts": {
     "lint": "standard",
-    "test-spec": "mocha --harmony-generators -R spec --bail --require co-mocha",
-    "test-cov": "node --harmony-generators node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- -R spec --bail --require co-mocha",
+    "test-spec": "mocha -R spec --bail",
+    "test-cov": "node node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- -R spec --bail",
     "test": "npm run lint && npm run test-cov"
   },
   "repository": {
@@ -33,18 +36,17 @@
   },
   "homepage": "https://github.com/blakeembrey/kroute",
   "devDependencies": {
-    "co-mocha": "^1.1.0",
-    "istanbul": "^0.3.13",
-    "koa": "^0.19.0",
-    "mocha": "^2.2.1",
-    "popsicle": "^0.5.6",
-    "popsicle-server": "^0.1.0",
-    "standard": "^3.3.2"
+    "istanbul": "^0.4.5",
+    "koa": "^2.3.0",
+    "mocha": "^3.5.0",
+    "popsicle": "^9.1.0",
+    "popsicle-server": "^2.0.0",
+    "standard": "^10.0.3"
   },
   "dependencies": {
-    "array-flatten": "^1.0.0",
-    "koa-compose": "^2.2.0",
-    "methods": "^1.1.0",
-    "path-to-regexp": "^1.0.0"
+    "array-flatten": "^2.1.1",
+    "koa-compose": "^4.0.0",
+    "methods": "^1.1.2",
+    "path-to-regexp": "^2.0.0"
   }
 }

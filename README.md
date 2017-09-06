@@ -18,13 +18,13 @@ npm install kroute --save
 Kroute exports a function which can be used to create router instances that work with Koa middleware.
 
 ```js
-var koa = require('koa')
-var kroute = require('kroute')
+const Koa = require('koa')
+const kroute = require('kroute')
 
-var app = koa()
-var router = kroute()
+const koa = new Koa
+const router = kroute()
 
-app.use(router)
+koa.use(router)
 ```
 
 ### Initialization
@@ -34,8 +34,8 @@ A router can be initialized with default handlers based on a resourceful routing
 ```js
 router({
   use: authorizeUser(),
-  index: function* () {},
-  create: [function* () {}, function* () {}]
+  index: async function () {},
+  create: [async function () {}, async function () {}]
 })
 ```
 
@@ -58,19 +58,19 @@ The object can also contain a `use` property which is mounted before any routes.
 Every router instance can used to attach request handlers.
 
 ```js
-router.get('/user', function* () {})
+router.get('/user', async function () {})
 ```
 
 Omitting the path name will ensure the handler is always executed when the method matches.
 
 ```js
-router.post(function* () {})
+router.post(async function () {})
 ```
 
 Every route method accepts multiple middleware handlers.
 
 ```js
-router.delete(authorizeUser(), function* () {})
+router.delete(authorizeUser(), async function () {})
 ```
 
 ### All Methods
@@ -78,13 +78,13 @@ router.delete(authorizeUser(), function* () {})
 Every router provides a `.all` method for attaching request handlers to every method.
 
 ```js
-router.all(function* () {})
+router.all(async function () {})
 ```
 
 It accepts a path and multiple middleware like any other method.
 
 ```js
-router.all('/', authorizeUser(), function* () {})
+router.all('/', authorizeUser(), async function () {})
 ```
 
 ### Mounting Middleware
@@ -110,7 +110,7 @@ router.use('/users', function* (next) {
 Like other methods, `.use` also accepts multiple request handlers and an optional path.
 
 ```js
-router.use(authorizeUser(), function* () {})
+router.use(authorizeUser(), async function () {})
 ```
 
 ### Params
@@ -118,7 +118,7 @@ router.use(authorizeUser(), function* () {})
 Every path can be dynamic and use Express-style parameter notation.
 
 ```js
-router.get('/:user', function* () {
+router.get('/:user', async function () {
   console.log(this.params.user) //=> "123"
 })
 ```
@@ -126,7 +126,7 @@ router.get('/:user', function* () {
 Every match is stored in the params as an object.
 
 ```js
-router.get('/:foo/:bar', function* () {
+router.get('/:foo/:bar', async function () {
   console.log(this.params) //=> { foo: "123", bar: "456" }
 })
 ```
@@ -145,8 +145,8 @@ Every method returns it's own instance, so routes can be chained together like E
 
 ```js
 router
-  .get('/foo', function* () {})
-  .post('/bar', function* () {})
+  .get('/foo', async function () {})
+  .post('/bar', async function () {})
 ```
 
 ### Options
@@ -154,7 +154,7 @@ router
 Every method accepts an options object as the last argument.
 
 ```js
-router.get('/foo', function* () {}, { strict: true, sensitive: true })
+router.get('/foo', async function () {}, { strict: true, sensitive: true })
 ```
 
 ## License
