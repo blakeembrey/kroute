@@ -3,6 +3,9 @@
   "version": "1.1.0",
   "description": "Modular Koa router middleware with Express-style routes and middleware mounting",
   "main": "lib/index.js",
+  "engines": {
+    "node": ">=7.6.0"
+  },
   "scripts": {
     "lint": "standard",
     "test-spec": "mocha -R spec --bail",
